@@ -1,8 +1,6 @@
 # Diário Pessoal com Análise de Emoções
 
-![GitHub repo size](https://img.shields.io/github/repo-size/dhaysetito/LingProg/projeto_final?style=for-the-badge)
-![GitHub language count](https://img.shields.io/github/languages/count/dhaysetito/LingProg/projeto_final?style=for-the-badge)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)
+![Python](https://img.shields.io/badge/language-Python-blue?style=for-the-badge&logo=python&logoColor=yellow) ![C++](https://img.shields.io/badge/language-C%2B%2B-blue?style=for-the-badge&logo=c%2B%2B&logoColor=yellow) ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)
 
 > Este projeto tem como objetivo desenvolver um **Diário Pessoal** com funcionalidades de **análise emocional** para auxiliar o usuário a compreender e organizar suas emoções ao longo do tempo. O sistema é desenvolvido em **C++** e faz integração com **Python** para a realização de análises de emoções e geração de gráficos e relatórios em PDF.
 
