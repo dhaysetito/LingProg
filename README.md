@@ -55,7 +55,7 @@ O projeto ainda está em desenvolvimento e as próximas atualizações serão vo
 1. Clone o repositório:
 
 ```bash
-git clone https://github.com/USER/REPO.git
+git clone https://github.com/dhaysetito/LingProg.git
 ```
 
 2. Navegue até o diretório que deseja:
