@@ -66,9 +66,9 @@ from flair.trainers import ModelTrainer
 import itertools
 
 # Definir as configurações de hiperparâmetros a serem testadas
-learning_rates = [0.1, 1.0]
-mini_batch_sizes = [32, 64]
-max_epochs = [2, 5, 10]
+learning_rates = [0.1]
+mini_batch_sizes = [64]
+max_epochs = [10]
 
 # Criar todas as combinações possíveis dos hiperparâmetros
 param_grid = list(itertools.product(learning_rates, mini_batch_sizes, max_epochs))
