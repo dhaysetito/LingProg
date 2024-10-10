@@ -1,0 +1,7 @@
+F1 Score: 0.40425531914893614
+Melhores parâmetros até agora: (0.01, 16, 10) com F1: 0.40425531914893614
+Melhores hiperparâmetros: lr=0.01, batch_size=16, epochs=10
+----------------------------------------------
+F1 Score: 0.42105263157894735
+Melhores parâmetros até agora: (0.1, 64, 10) com F1: 0.5921052631578947
+Melhores hiperparâmetros: lr=0.1, batch_size=64, epochs=10
