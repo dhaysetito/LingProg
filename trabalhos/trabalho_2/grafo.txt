@@ -1,0 +1,12 @@
+# O peso do grafo é igual a quantidade de matérias que são pre requisitos entre as materias dadas
+Comp1 Comp2 1
+Eletr1 Eletr2 1
+Eletr1 Eletr3 2
+Eletr1 Eletr4 3
+Eletr2 Eletr3 1
+Eletr2 Eletr4 2
+Eletr3 Eletr4 1
+Cal1 Cal2 1
+Cal1 Cal3 2
+Cal2 Cal3 1
+Cal1 ConvEne 5
