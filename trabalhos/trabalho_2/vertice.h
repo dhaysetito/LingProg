@@ -1,3 +1,9 @@
+/**********************************************************
+ * Arquivo: vertice.h
+ * Descrição: Cabeçalho da classe Vertice
+ * Autora: Dhayse de Lima Tito
+ **********************************************************/
+
 #ifndef VERTICE_H
 #define VERTICE_H
 
@@ -6,11 +12,11 @@ using namespace std;
 
 class Vertice {
     private:
-        string rotulo;  // Rótulo ou nome do vértice
+        string rotulo; 
 
     public:
-        Vertice(string rotulo);  // Construtor
-        string getRotulo();  // Retorna o rótulo do vértice
+        Vertice(string rotulo); 
+        string getRotulo(); 
 };
 
 #endif

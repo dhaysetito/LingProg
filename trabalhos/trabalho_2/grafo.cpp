@@ -1,3 +1,10 @@
+/**********************************************************
+ * Arquivo: aresta.cpp
+ * Descrição: Implementação da classe Grafo -
+ *            Representa um grafo que utiliza arestas, vertices e pesos
+ * Autora: Dhayse de Lima Tito
+ **********************************************************/
+
 #include <iostream>
 #include <limits>
 #include <vector>
@@ -18,7 +25,7 @@ Grafo::Grafo() {
 }
 
 // Insere uma aresta entre dois vértices
-void Grafo::inserirAresta(Vertice* origem, Vertice* destino, double peso) {
+void Grafo::inserirAresta (Vertice* origem, Vertice* destino, double peso) {
     // Verifica se o vértice de origem já está no grafo
     int idxOrigem = encontrarIndiceVertice(origem);
     if (idxOrigem == -1) {
@@ -38,6 +45,7 @@ void Grafo::inserirAresta(Vertice* origem, Vertice* destino, double peso) {
         adj = new list<pair<int, double>>[vertices.size()];  
     } else if (vertices.size() > numVertices) {
         // Redimensiona a lista de adjacências para incluir os novos vértices
+        // Ex: adj[0] -> [(1, 2.5), (2, 3.0)]
         list<pair<int, double>>* novaAdj = new list<pair<int, double>>[vertices.size()];
         
         // Copia as listas anteriores
@@ -60,15 +68,13 @@ void Grafo::inserirAresta(Vertice* origem, Vertice* destino, double peso) {
     Aresta* novaAresta = new Aresta(origem, destino, peso);  // Supondo que Aresta tenha um construtor que recebe dois vértices e o peso
     arestas.push_back(novaAresta); 
 
-
     // Verifica se a aresta foi encontrada
-    //cout << novaAresta->getPrimeiroVertice()->getRotulo() << " e " << novaAresta->getSegundoVertice()->getRotulo() << " com peso " << novaAresta->getPeso() << endl;
+    //cout << novaAresta->getVerticeOrigem()->getRotulo() << " e " << novaAresta->getVerticeDestino()->getRotulo() << " com peso " << novaAresta->getPeso() << endl;
     
 }
 
-
 // Encontra o índice do vértice
-int Grafo::encontrarIndiceVertice(Vertice* vertice) {
+int Grafo::encontrarIndiceVertice (Vertice* vertice) {
     for (size_t i = 0; i < vertices.size(); i++) {
         if (vertices[i]->getRotulo() == vertice->getRotulo()) {
             return i;
@@ -79,7 +85,7 @@ int Grafo::encontrarIndiceVertice(Vertice* vertice) {
 }
 
 // Procura o vertice a partir da string
-Vertice* Grafo::procurarVertice(const string& nome) {
+Vertice* Grafo::procurarVertice (const string& nome) {
     for (Vertice* v : vertices) {
         if (v->getRotulo() == nome) {
             return v; 
@@ -89,13 +95,13 @@ Vertice* Grafo::procurarVertice(const string& nome) {
 }
 
 // Cria e retorna a matriz de adjacência
-vector<vector<double>> Grafo::criarMatrizAdj() {
+vector<vector<double>> Grafo::criarMatrizAdj () {
     vector<vector<double>> matriz(numVertices, vector<double>(numVertices, 0));
     
     for (Aresta* aresta : arestas) {
-        cout << "Teste" << endl;
-        int indiceOrigem = encontrarIndiceVertice(aresta->getPrimeiroVertice());
-        int indiceDestino = encontrarIndiceVertice(aresta->getSegundoVertice());
+        //cout << "Teste" << endl;
+        int indiceOrigem = encontrarIndiceVertice(aresta->getVerticeOrigem());
+        int indiceDestino = encontrarIndiceVertice(aresta->getVerticeDestino());
         matriz[indiceOrigem][indiceDestino] = aresta->getPeso();
         matriz[indiceDestino][indiceOrigem] = aresta->getPeso(); 
     }
@@ -104,7 +110,7 @@ vector<vector<double>> Grafo::criarMatrizAdj() {
 }
 
 // Imprime matriz de adjacência
-void Grafo::imprimirMatrizAdj() {
+void Grafo::imprimirMatrizAdj () {
     vector<vector<double>> matriz = criarMatrizAdj();
 
     for (size_t i = 0; i < matriz.size(); i++) {
@@ -116,15 +122,14 @@ void Grafo::imprimirMatrizAdj() {
 }
 
 // Calcula e imprime densidade do grafo
-void Grafo::imprimirDensidade() {
+void Grafo::imprimirDensidade () {
     int numArestas = arestas.size();
 
-    // Fórmula para a densidade: (2 * número de arestas) / (número de vértices * (número de vértices - 1))
     double densidade = (2.0 * numArestas) / (numVertices * (numVertices - 1));
     cout << "Densidade do grafo: " << densidade << endl;
 }
 
-void Grafo::imprimirVerticeMaiorCentralidadeGrau() {
+void Grafo::imprimirVerticeMaiorCentralidadeGrau () {
     double maiorGrau = -1;
     Vertice* verticeMaiorGrau = nullptr;
 
@@ -152,7 +157,7 @@ void Grafo::imprimirVerticeMaiorCentralidadeGrau() {
 
 
 // Algoritmo de Dijkstra
-void Grafo::encontrarMenorCaminho(Vertice* origem, Vertice* destino) {
+void Grafo::encontrarMenorCaminho (Vertice* origem, Vertice* destino) {
     // Vetor de distâncias
     vector<int> dist(numVertices, INFINITO);
 
@@ -176,18 +181,16 @@ void Grafo::encontrarMenorCaminho(Vertice* origem, Vertice* destino) {
 
     // Loop do algoritmo
     while (!pq.empty()) {
-        pair<int, int> p = pq.top();  // Extrai o pair do topo
-        int u = p.second;  // Obtém o vértice do pair
-        pq.pop();  // Remove da fila
+        pair<int, int> p = pq.top(); 
+        int u = p.second;  
+        pq.pop();  
 
         // Verifica se o vértice não foi expandido
         if (!visitados[u]) {
-            // Marca como visitado
             visitados[u] = true;
 
             // Percorre os vértices adjacentes de "u"
             for (auto it = adj[u].begin(); it != adj[u].end(); it++) {
-                // Obtém o vértice adjacente e o custo da aresta
                 int v = it->first;
                 int custo_aresta = it->second;
 
@@ -228,17 +231,16 @@ void Grafo::encontrarMenorCaminho(Vertice* origem, Vertice* destino) {
 }
 
 // Imprime vertice de maior centralidade por proximidade
-void Grafo::imprimirVerticeMaiorCentralidadeProximidade() {
+void Grafo::imprimirVerticeMaiorCentralidadeProximidade () {
     // Variáveis para armazenar o vértice com maior centralidade de proximidade e o valor dessa centralidade
     Vertice* verticeMaiorCentralidade = nullptr;
     double maiorCentralidade = 0.0;
 
     // Iterar sobre todos os vértices
     for (Vertice* vertice : vertices) {
-        // Vetor de distâncias, inicializado com INFINITO para todos os vértices
+       
         vector<int> dist(numVertices, INFINITO);
 
-        // Vetor de visitados
         vector<bool> visitados(numVertices, false);
 
         // Fila de prioridades (distância, vértice)

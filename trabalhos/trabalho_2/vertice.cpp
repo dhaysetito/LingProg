@@ -1,3 +1,10 @@
+/**********************************************************
+ * Arquivo: vertice.cpp
+ * Descrição: Implementação da classe Vertice -
+ *            Representa o nome do rotulo 
+ * Autora: Dhayse de Lima Tito
+ **********************************************************/
+
 #include "vertice.h"
 
 // Construtor da classe Vertice

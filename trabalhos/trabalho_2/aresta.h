@@ -1,3 +1,9 @@
+/**********************************************************
+ * Arquivo: aresta.h
+ * Descrição: Cabeçalho da classe Aresta
+ * Autora: Dhayse de Lima Tito
+ **********************************************************/
+
 #ifndef ARESTA_H
 #define ARESTA_H
 
@@ -5,14 +11,14 @@
 
 class Aresta {
     private:
-        Vertice* primeiroVertice;  // Vertice de origem
-        Vertice* segundoVertice;   // Vertice de destino
-        double peso;               // Peso da aresta
+        Vertice* verticeOrigem;  
+        Vertice* verticeDestino;   
+        double peso;               
 
     public:
         Aresta(Vertice* primeiro, Vertice* segundo, double peso); 
-        Vertice* getPrimeiroVertice();  
-        Vertice* getSegundoVertice();   
+        Vertice* getVerticeOrigem();  
+        Vertice* getVerticeDestino();   
         double getPeso();               
 };
 

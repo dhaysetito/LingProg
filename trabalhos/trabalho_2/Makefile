@@ -17,8 +17,8 @@ HEADERS = aresta.h vertice.h grafo.h
 OBJS = $(SRCS:.cpp=.o)
 
 # Argumentos passados ao make run
-#ARGS = $(filter-out $@,$(MAKECMDGOALS))
-ARGS = "grafo.txt"
+ARGS = $(filter-out $@,$(MAKECMDGOALS))
+#ARGS = "grafo.txt"
 
 # Regras para compilar o programa
 $(EXEC): $(OBJS)
@@ -37,5 +37,5 @@ run: $(EXEC)
 	./$(EXEC) $(ARGS)
 
 # Permitir que o make entenda "run" como um comando de alvo, mesmo com argumentos
-#%:
-#	@:
+%:
+	@:

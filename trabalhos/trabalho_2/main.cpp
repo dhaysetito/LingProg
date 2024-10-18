@@ -1,3 +1,22 @@
+/**********************************************************
+ * Universidade Federal do Rio de Janeiro (UFRJ)
+ * Disciplina: Linguagens de Programação
+ * Professor: Miguel Campista
+ *
+ * Arquivo: main.cpp
+ * Versão: 2.0
+ * Data de Criação: 15/10/2024
+ * Última Modificação: 18/10/2024
+ *
+ * Descrição: 
+ * Programa que implementa um grafo  a partir de um 
+ * arquivo txt. Possui funcionalidades que são escolhidas 
+ * de um menu.
+ **********************************************************
+ * Autora: Dhayse de Lima Tito
+ * E-mail: dhayse@poli.ufrj.br
+ **********************************************************/
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -30,12 +49,12 @@ void carregarGrafoDeArquivo(Grafo& grafo, const string& nomeArquivo) {
         // Procura se os vértices já existem no grafo
         Vertice* v1 = grafo.procurarVertice(vertice1);
         if (v1 == nullptr) {
-            v1 = new Vertice(vertice1);  // Cria um novo vértice se não encontrado
+            v1 = new Vertice(vertice1);  
         }
 
         Vertice* v2 = grafo.procurarVertice(vertice2);
         if (v2 == nullptr) {
-            v2 = new Vertice(vertice2);  // Cria um novo vértice se não encontrado
+            v2 = new Vertice(vertice2);  
         }
 
         // Insere a aresta entre os vértices v1 e v2
@@ -59,6 +78,13 @@ void mostrarMenu() {
     cout << "Escolha uma opção: ";
 }
 
+// Aguarda 'Enter' antes de continuar
+void esperarEnter() {
+    cout << "\nPressione Enter para continuar...\n";
+    while (cin.get() != '\n'); // Limpa o buffer
+    cin.get();  // Espera o usuário pressionar Enter
+}
+
 int main(int argc, char* argv[]) {
     Grafo grafo;
 
@@ -71,9 +97,8 @@ int main(int argc, char* argv[]) {
     carregarGrafoDeArquivo(grafo, nomeArquivo);
 
     int opcao;
-    bool continuar = true;
 
-    while (continuar) {
+    do {
         mostrarMenu();
         cin >> opcao;
 
@@ -96,15 +121,12 @@ int main(int argc, char* argv[]) {
                 cout << "Digite o vértice de destino: ";
                 cin >> destino;
 
-                // Procurar os vértices pelo rótulo (nome)
                 Vertice* verticeOrigem = grafo.procurarVertice(origem);
                 Vertice* verticeDestino = grafo.procurarVertice(destino);
 
-                // Verificar se os vértices foram encontrados
                 if (verticeOrigem == nullptr || verticeDestino == nullptr) {
                     cout << "Um ou ambos os vértices não foram encontrados no grafo." << endl;
                 } else {
-                    // Executar o algoritmo de Dijkstra
                     grafo.encontrarMenorCaminho(verticeOrigem, verticeDestino);
                 }
                 break;
@@ -114,12 +136,16 @@ int main(int argc, char* argv[]) {
                 grafo.imprimirVerticeMaiorCentralidadeProximidade();
                 break;
             case 6:
-                continuar = false;
                 break;
             default:
                 cout << "Opção inválida, tente novamente." << endl;
+                break;
         }
-    }
+        if (opcao != 6) {
+            esperarEnter();
+        }
+    }while (opcao != 6);
+    
 
     cout << "Programa finalizado." << endl;
     return 0;

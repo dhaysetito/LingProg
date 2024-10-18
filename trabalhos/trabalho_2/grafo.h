@@ -1,3 +1,9 @@
+/**********************************************************
+ * Arquivo: grafo.h
+ * Descrição: Cabeçalho da classe Grafo
+ * Autora: Dhayse de Lima Tito
+ **********************************************************/
+
 #ifndef GRAFO_H
 #define GRAFO_H
 
@@ -26,9 +32,9 @@ class Grafo{
     private:
         vector<Vertice*> vertices;
         vector<Aresta*> arestas;
-        list<pair <int, double >>* adj;
+
+        list<pair <int, double >>* adj; // Lista de vertices adjacentes de um vertice
         size_t numVertices;
-        //int prevNumVertices;
 
         int encontrarIndiceVertice (Vertice* vertice);
         vector<vector<double>> criarMatrizAdj ();
