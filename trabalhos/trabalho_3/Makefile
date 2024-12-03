@@ -34,8 +34,8 @@ clean:
 
 # Regra para rodar o programa após a compilação, usando argumentos
 run: $(EXEC)
-	./$(EXEC)
+	./$(EXEC) 
 
-# Permitir que o make entenda "run" como um comando de alvo, mesmo com argumentos
-#%:
-#	@:
+# # Permitir que o make entenda "run" como um comando de alvo, mesmo com argumentos
+# %:
+# 	@:

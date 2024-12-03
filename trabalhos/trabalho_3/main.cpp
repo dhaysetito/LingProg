@@ -4,96 +4,48 @@
  * Professor: Miguel Campista
  *
  * Arquivo: main.cpp
- * Versão: 1.0
- * Data de Criação: 24/10/2024
- * Última Modificação: 28/10/2024
+ * Versão: 2.0
+ * Data de Criação: 28/10/2024
+ * Última Modificação: 22/11/2024
  *
  * Descrição: 
- * Programa que implementa um gerenciador de disciplinas
- * na faculdade.
+ * Programa que implementa um historico de discplina com
+ * calculo de CRA e salvamento num txt
  **********************************************************
  * Autora: Dhayse de Lima Tito
  * E-mail: dhayse@poli.ufrj.br
  **********************************************************/
 
 #include <iostream>
-#include <fstream>
-#include <sstream>
 #include <string>
-
+#include <limits>
+#include "historico.h"
 
 using namespace std;
-
-void carregarGrafoDeArquivo(Grafo& grafo, const string& nomeArquivo) {
-    ifstream arquivo(nomeArquivo);
-    string linha;
-
-    if (!arquivo.is_open()) {
-        cout << "Erro ao abrir o arquivo: " << nomeArquivo << endl;
-        return;
-    }
-
-    while (getline(arquivo, linha)) {
-        // Ignora linhas de comentários que começam com '#'
-        if (linha[0] == '#') continue;
-
-        string vertice1, vertice2;
-        double peso;
-
-        // Usa um stream para separar a linha em vértices e pesos
-        stringstream ss(linha);
-        ss >> vertice1 >> vertice2 >> peso;
-
-        // Procura se os vértices já existem no grafo
-        Vertice* v1 = grafo.procurarVertice(vertice1);
-        if (v1 == nullptr) {
-            v1 = new Vertice(vertice1);  
-        }
-
-        Vertice* v2 = grafo.procurarVertice(vertice2);
-        if (v2 == nullptr) {
-            v2 = new Vertice(vertice2);  
-        }
-
-        // Insere a aresta entre os vértices v1 e v2
-        grafo.inserirAresta(v1, v2, peso);
-
-        //cout << "Aresta inserida: " << vertice1 << " " << vertice2 << " " << peso << endl;
-    }
-
-    arquivo.close();
-}
-
-
-void mostrarMenu() {
-    cout << "Menu de Opções:" << endl;
-    cout << "1. Imprimir Matriz de Adjacência" << endl;
-    cout << "2. Imprimir Densidade do Grafo" << endl;
-    cout << "3. Imprimir o vértice com a maior centralidade de grau" << endl;
-    cout << "4. Encontrar o menor caminho (Dijkstra)" << endl;
-    cout << "5. Imprimir o vértice com a maior centralidade de proximidade" << endl;
-    cout << "6. Sair" << endl;
-    cout << "Escolha uma opção: ";
-}
 
 // Aguarda 'Enter' antes de continuar
 void esperarEnter() {
     cout << "\nPressione Enter para continuar...\n";
-    while (cin.get() != '\n'); // Limpa o buffer
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');  // Ignora qualquer entrada residual no buffer
     cin.get();  // Espera o usuário pressionar Enter
 }
 
-int main(int argc, char* argv[]) {
-    Grafo grafo;
+void mostrarMenu() {
+    cout << "\nMenu de Opções:" << endl;
+    cout << "1. Imprimir histórico de disciplinas" << endl;
+    cout << "2. Imprimir uma disciplina" << endl;
+    cout << "3. Inserir uma disciplina" << endl;
+    cout << "4. Remover disciplina" << endl;
+    cout << "5. Buscar disciplinas por período" << endl;
+    cout << "6. Alterar nota" << endl;
+    cout << "7. Calcular CRA" << endl;
+    cout << "8. Salvar e sair" << endl;
+    cout << "Escolha uma opção: ";
+}
 
-    if (argc < 2) {
-        cout << "Por favor, forneça o nome do arquivo como argumento." << endl;
-        return 1;
-    }
-
-    string nomeArquivo = argv[1];
-    carregarGrafoDeArquivo(grafo, nomeArquivo);
-
+int main() {
+    Historico historico("disciplinas.txt");
+    CRA cra;
     int opcao;
 
     do {
@@ -102,49 +54,74 @@ int main(int argc, char* argv[]) {
 
         switch (opcao) {
             case 1:
-                cout << "Matriz de Adjacência:" << endl;
-                grafo.imprimirMatrizAdj();
+                cout << "\nHistórico de Disciplinas:\n" << historico;
                 break;
-            case 2:
-                grafo.imprimirDensidade();
+            case 2: {
+                string nome;
+                cout << "Digite o nome da disciplina: ";
+                cin >> nome;
+                Disciplina* d = historico.buscarDisciplina(nome);
+                if (d) cout << *d << endl;
+                else cout << "Disciplina não encontrada." << endl;
                 break;
-            case 3:
-                cout << "Vértice com maior centralidade de grau: " << endl;
-                grafo.imprimirVerticeMaiorCentralidadeGrau();
-                break;
-            case 4: {
-                string origem, destino;
-                cout << "Digite o vértice de origem: ";
-                cin >> origem;
-                cout << "Digite o vértice de destino: ";
-                cin >> destino;
-
-                Vertice* verticeOrigem = grafo.procurarVertice(origem);
-                Vertice* verticeDestino = grafo.procurarVertice(destino);
-
-                if (verticeOrigem == nullptr || verticeDestino == nullptr) {
-                    cout << "Um ou ambos os vértices não foram encontrados no grafo." << endl;
+            }
+            case 3: {
+                Disciplina d;
+                cin >> d;
+                if ((historico += d) == -1){
+                   cout << "Disciplina já existente no histórico." << endl; 
                 } else {
-                    grafo.encontrarMenorCaminho(verticeOrigem, verticeDestino);
+                    cout << "Disciplina inserida com sucesso!" << endl;
                 }
                 break;
             }
-            case 5:
-                cout << "Vértice com maior centralidade de proximidade: " << endl;
-                grafo.imprimirVerticeMaiorCentralidadeProximidade();
+            case 4: {
+                string nome;
+                cout << "Digite o nome da disciplina: ";
+                cin >> nome;
+                Disciplina d{nome, "", 0, 0.0};
+                if ((historico -= d) == -1) cout << "Erro ao remover disciplina." << endl;
+                else cout << "Disciplina removida com sucesso!" << endl;
                 break;
-            case 6:
+            }
+            case 5: {
+                string periodo;
+                cout << "Digite o período: ";
+                cin >> periodo;
+                auto disciplinas = historico(periodo);
+                for (const auto& d : disciplinas) cout << d << endl;
+                break;
+            }
+            case 6: {
+                string nome;
+                double novaNota;
+                cout << "Digite o nome da disciplina: ";
+                cin >> nome;
+                cout << "Digite a nova nota: ";
+                cin >> novaNota;
+                try {
+                    historico[nome] = novaNota;
+                    cout << "Nota alterada com sucesso!" << endl;
+                } catch (const invalid_argument& e) {
+                    cout << e.what() << endl;
+                }
+                break;
+            }
+            case 7:
+                historico >> cra;
+                cra.exibirCRA();
+                break;
+            case 8:
+                cout << "Encerrando o programa..." << endl;
                 break;
             default:
-                cout << "Opção inválida, tente novamente." << endl;
+                cout << "Opção inválida." << endl;
                 break;
         }
-        if (opcao != 6) {
+        if (opcao != 8) {
             esperarEnter();
         }
-    }while (opcao != 6);
-    
+    } while (opcao != 8);
 
-    cout << "Programa finalizado." << endl;
     return 0;
 }
