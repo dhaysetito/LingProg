@@ -5,7 +5,7 @@ EXEC = build/programa
 CC = g++
 
 # Flags de compilação
-CFLAGS = -Wall -std=c++17 -Iinclude
+CFLAGS = -Wall -std=c++11 -Iinclude
 
 # Diretórios
 SRC_DIR = src/cpp
@@ -13,7 +13,10 @@ INCLUDE_DIR = include
 BUILD_DIR = build
 
 # Arquivos de código-fonte
-SRCS = $(SRC_DIR)/main.cpp 
+SRCS = $(SRC_DIR)/main.cpp $(SRC_DIR)/diario.cpp $(SRC_DIR)/pagina.cpp
+
+# Arquivos de cabeçalho
+HEADERS = $(INCLUDE_DIR)/pagina.h $(INCLUDE_DIR)/diario.h
 
 # Geração dos arquivos objeto (coloca os .o na pasta build)
 OBJS = $(SRCS:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
@@ -24,7 +27,7 @@ $(EXEC): $(OBJS)
 
 # Regra genérica para compilar arquivos .cpp (salva .o na pasta build)
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(HEADERS)
-	mkdir -p $(BUILD_DIR)  # Garante que a pasta build exista
+	mkdir -p $(BUILD_DIR)  
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Limpeza dos arquivos objeto e do executável
