@@ -2,7 +2,7 @@ import pandas as pd
 from flair.data import Sentence
 
 # Carregar os dados do arquivo CSV
-df = pd.read_csv("dataset_2.csv", delimiter=';')
+df = pd.read_csv("data/dataset_emocoes.csv", delimiter=';')
 
 # Verificar as primeiras linhas do dataset
 print(df.head())
@@ -83,7 +83,7 @@ for lr, batch_size, epochs in param_grid:
     
     # Treinar o modelo com a combinação atual de hiperparâmetros
     trainer.train(
-        base_path=f'modelo_de_emocoes_lr{lr}_bs{batch_size}_ep{epochs}',  # Caminho para salvar o modelo
+        base_path=f'models/modelo_de_emocoes_lr{lr}_bs{batch_size}_ep{epochs}',  # Caminho para salvar o modelo
         learning_rate=lr,
         mini_batch_size=batch_size,
         max_epochs=epochs)
