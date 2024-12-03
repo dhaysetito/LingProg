@@ -16,13 +16,15 @@ O sistema permite que o usuário:
 
 ## 📋 Menu de Opções
 
-1. **Registrar Entrada no Diário**: Adicionar uma nova entrada com texto e emoções.
-2. **Excluir Entrada do Diário**: Remover uma entrada selecionada.
+1. **Registrar Página no Diário**: Adicionar uma nova página com texto e emoções.
+2. **Excluir Página do Diário**: Remover uma página selecionada do diário.
 3. **Analisar Emoções de uma Entrada**: Processar e exibir as emoções detectadas em uma entrada.
-4. **Histórico de Emoções**: Exibir gráficos de evolução emocional.
-5. **Buscar Entrada por Emoção**: Exibir entradas com uma emoção predominante.
+4. **Histórico de Emoções**: Exibir gráficos de evolução emocional com base nas entradas.
+5. **Buscar Entrada por Emoção**: Exibir entradas que contêm uma emoção predominante.
 6. **Exibir Entradas por Data**: Mostrar entradas em um intervalo de datas.
-7. **Exportar Diário em PDF**: Gerar um PDF do diário com todas as entradas ou de um período específico.
+7. **Exibir Diário Completo**: Exibir todas as entradas registradas no diário.
+8. **Exportar Diário em PDF**: Gerar um PDF do diário com todas as entradas ou de um período específico.
+9. **Salvar e Sair**: Salvar as alterações e encerrar o programa.
 
 ## 🚀 Tecnologias Utilizadas
 
@@ -56,8 +58,51 @@ O sistema permite que o usuário:
 │   └── diario_data.txt  
 │   ├── emocoes_treino.csv 
 └── README.md
-
 ```
+
+## 🛠️ Requisitos
+
+### Dependências C++:
+
+- **Compilador C++** (GCC ou Clang).
+- **Make** (para a compilação).
+
+### Dependências Python:
+
+- **Python 3.x**: Certifique-se de ter o Python 3.x instalado em seu sistema.
+- **Ambiente Virtual Python** (recomendado): Use um ambiente virtual para gerenciar as dependências de Python sem conflitos.
+
+### Instalação das Dependências Python:
+
+1. **Criar o Ambiente Virtual**:
+
+   Se você ainda não tiver um ambiente virtual Python, crie um com o seguinte comando:
+
+   ```bash
+   python3 -m venv venv
+   ```
+
+2. **Ativar o Ambiente Virtual**:
+
+   - **No Linux/Mac**:
+
+     ```bash
+     source venv/bin/activate
+     ```
+
+   - **No Windows**:
+
+     ```bash
+     .\venv\Scripts\activate
+     ```
+
+3. **Instalar as Dependências Python**:
+
+   Após ativar o ambiente virtual, instale as dependências necessárias com o seguinte comando:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 ## 🛠️ Ajustes e Melhorias
 

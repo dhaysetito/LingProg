@@ -1,5 +1,5 @@
 # Nome do executável
-EXEC = build/programa
+EXEC = build/Divertidamente
 
 # Compilador
 CC = g++
