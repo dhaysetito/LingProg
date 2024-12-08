@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <chrono>
+#include <utility>
 #include "pagina.h"
 
 /**
@@ -64,15 +65,31 @@ class Diario {
         // Inicia diário conforme nome do dono
         void iniciarDiario(const std::string& nomeDono);
 
+        // Conta quantas paginas rem o diário
         size_t contarPaginas() const;
+
+        // Retorna a emoção predominante de uma página específica (informada pela data) e seu nível de intensidade
+        std::pair<std::string, float> analisarPaginaEmocao (const std::chrono::system_clock::time_point& data);
+
+        // Salva em formato de gráfico o histórico de emoções
+        //void historicoEmocoes ();
+
+        // Busca e imprime entrada por uma emocao especifica
+        // void imprimePaginasEmocao (const std::string& emocao);
+
+        // Exporta diário em PDF
+        // void exportarPDF();
 
         std::chrono::system_clock::time_point stringParaData(const std::string& data_str);
         
+        
+
     private:
         std::vector<Pagina> paginas;  // Armazena as páginas do diário
         std::string nomeDono;         // Nome do dono do diário
         std::chrono::system_clock::time_point dataCriacao;  // Data de criação do diário
         int numeroPagina;
+        std::string emocao;
 
 };
 

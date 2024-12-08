@@ -9,10 +9,11 @@
 O sistema permite que o usuário:
 
 - Registre entradas no diário.
+- Exclue uma entrada do diário por data.
 - Analise as emoções presentes nas entradas.
-- Visualize gráficos de evolução emocional.
-- Exclua ou busque entradas por data ou emoção.
-- Exporte o diário em formato PDF.
+- Exibe entradas por data.
+- Exibe histórico do diário completo.
+- Salva o diário em um arquivo txt e fecha o programa.
 
 ## 📋 Menu de Opções
 
@@ -20,11 +21,8 @@ O sistema permite que o usuário:
 2. **Excluir Página do Diário**: Remover uma página selecionada do diário.
 3. **Analisar Emoções de uma Entrada**: Processar e exibir as emoções detectadas em uma entrada.
 4. **Histórico de Emoções**: Exibir gráficos de evolução emocional com base nas entradas.
-5. **Buscar Entrada por Emoção**: Exibir entradas que contêm uma emoção predominante.
-6. **Exibir Entradas por Data**: Mostrar entradas em um intervalo de datas.
-7. **Exibir Diário Completo**: Exibir todas as entradas registradas no diário.
-8. **Exportar Diário em PDF**: Gerar um PDF do diário com todas as entradas ou de um período específico.
-9. **Salvar e Sair**: Salvar as alterações e encerrar o programa.
+5. **Exibir Diário Completo**: Exibir todas as entradas registradas no diário.
+6. **Salvar e Sair**: Salvar as alterações em um txt e encerrar o programa.
 
 ## 🚀 Tecnologias Utilizadas
 
@@ -37,27 +35,32 @@ O sistema permite que o usuário:
 
 ```bash
 .
-├── src/                 
-│   ├── cpp/             # Diretório de código C++
-│   │   ├── main.cpp     
-│   │   ├── func1.cpp    
-│   │   └── func1.h      
-│   ├── python/          # Diretório de código Python
-│   │   ├── emotions.py  
-│   │   ├── pdf_export.py 
-│   └── bindings/        # Código para interligação entre C++ e Python
-│       ├── py_bind.cpp  
-│       └── py_bind.h    
-├── tests/               # Testes do projeto
-│   ├── cpp/             
-│   └── python/          
-├── build/               # Arquivos gerados pela compilação C++
-│   ├── Makefile         
-├── venv/                # Ambiente virtual para dependências Python
-├── data/                # Dados de entrada e saída
-│   └── diario_data.txt  
-│   ├── emocoes_treino.csv 
-└── README.md
+├── .vscode/                # Configurações do VSCode
+├── archive/                # Arquivos antigos ou backups
+├── build/                  # Arquivos de compilação
+├── data/                   # Dados utilizados no programa
+│   ├── input/              # Dados de entrada
+│   ├── output/             # Dados de saída
+├── include/                # Arquivos de cabeçalho (.h)
+├── models/                 # Modelos treinados para análise de emoções
+│   └── modelo_de_emocoes_lr0.1_bs64_ep10/
+├── pyenv/                  # Ambiente virtual Python
+├── sandbox/                # Testes e experimentos
+│   └── melhores_parametros.txt
+├── src/                    # Código-fonte principal
+│   ├── cpp/                # Código-fonte em C++
+│   │   ├── main.cpp
+│   │   ├── diario.cpp
+│   │   ├── pagina.cpp
+│   ├── python/             # Código-fonte em Python
+│       ├── modelo_emocoes.py
+│       ├── test_model.py
+│       ├── train_model.py
+│       └── treino_emocoes.py
+├── Makefile                # Arquivo de automação para compilação e execução
+├── README.md               # Documentação do projeto
+└── requirements.txt        # Dependências do Python
+
 ```
 
 ## 🛠️ Requisitos
@@ -66,11 +69,19 @@ O sistema permite que o usuário:
 
 - **Compilador C++** (GCC ou Clang).
 - **Make** (para a compilação).
+- **Compilar para integração com Python**:
+   ```bash
+   sudo apt-get install pybind11-dev
+   ```
 
 ### Dependências Python:
 
 - **Python 3.x**: Certifique-se de ter o Python 3.x instalado em seu sistema.
 - **Ambiente Virtual Python** (recomendado): Use um ambiente virtual para gerenciar as dependências de Python sem conflitos.
+- Instalar automática os pacotes do requiremtns.txt com comando:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 ### Instalação das Dependências Python:
 

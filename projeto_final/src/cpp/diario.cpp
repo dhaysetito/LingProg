@@ -4,7 +4,11 @@
 #include <algorithm>
 #include <fstream>
 #include <cstring>
+#include <pybind11/embed.h>
+
 #include "diario.h"
+
+namespace py = pybind11;
 
 // Contrutor
 Diario::Diario(const std::string& nomeDono, 
@@ -252,21 +256,55 @@ size_t Diario::contarPaginas() const{
     return paginas.size();
 }
 
+std::pair<std::string, float> Diario::analisarPaginaEmocao(const std::chrono::system_clock::time_point& data) {
+    std::string emocao;
+    float probabilidade = 0.0f;
+
+    const Pagina* pagina = buscarPaginaPorData(data);
+
+    // Verifica se a página foi encontrada
+    if (!pagina) {
+        std::cerr << "Erro: Página não encontrada para a data fornecida." << std::endl;
+        return {"Erro", 0.0f};
+    }
+
+    try {
+        // Importa o módulo onde a classe ModeloEmocoes está definida
+        py::module modelo_modulo = py::module::import("modelo_emocoes");
+
+        // Instancia a classe ModeloEmocoes
+        py::object modelo = modelo_modulo.attr("ModeloEmocoes")(
+            "models/modelo_de_emocoes_lr0.1_bs64_ep10/best-model.pt"
+        );
+
+        // Chama o método prever_emocao
+        py::tuple resultado = modelo.attr("prever_emocao")(pagina->getConteudo()).cast<py::tuple>();
+
+        // Extrai a emoção e a probabilidade do retorno (tuple)
+        emocao = resultado[0].cast<std::string>();      // Primeiro elemento: emoção
+        probabilidade = resultado[1].cast<float>();    // Segundo elemento: probabilidade
+    } catch (const py::error_already_set& e) {
+        std::cerr << "Erro ao executar função Python: " << e.what() << std::endl;
+        return {"Erro", 0.0f};
+    }
+
+    return {emocao, probabilidade};
+}
+
 std::chrono::system_clock::time_point Diario::stringParaData(const std::string& data_str) {
     std::tm tm = {};
     std::stringstream ss(data_str);
-    
+
     // Usamos std::get_time para fazer a conversão da string para std::tm
     ss >> std::get_time(&tm, "%d/%m/%Y");  // Formato esperado: "dd/mm/yyyy"
     
     if (ss.fail()) {
-        std::cerr << "Erro ao converter a data!" << std::endl;
-        throw std::invalid_argument("Formato de data inválido");
+        std::cerr << "Erro ao converter a data! Formato esperado: dd/mm/yyyy" << std::endl;
     }
-    
+
     // Converte o tm para time_t
     std::time_t time = std::mktime(&tm);
-    
+
     // Retorna o time_point com base no time_t
     return std::chrono::system_clock::from_time_t(time);
 }
