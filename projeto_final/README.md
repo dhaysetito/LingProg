@@ -121,7 +121,12 @@ O projeto ainda está em desenvolvimento.
 
 ## 🛠️ Como Executar
 
-1. **Compilação**:
+1. Executar o modelo da Rede Neural:
+   ```bash
+   python src/python/treino_emocoes.py
+   ```
+
+2. **Compilação**:
    Utilize o `Makefile` fornecido para compilar o projeto. No terminal, navegue até o diretório do projeto e execute o comando:
    
    ```bash
@@ -130,22 +135,20 @@ O projeto ainda está em desenvolvimento.
 
    Isso gerará um executável chamado `Divertidamente`.
 
-2. **Execução**:
+3. **Execução**:
    Após a compilação, o programa pode ser executado com o comando:
    
    ```bash
    make run
    ```
 
-3. **Limpeza**:
+4. **Limpeza**:
    Para limpar os arquivos compilados, você pode utilizar o seguinte comando:
    
    ```bash
    make clean
    ```
-
-4. As funções de análise emocional e exportação de PDF serão executadas através das chamadas para os scripts Python.
-
+   
 ## 📄 Licença
 
 Este projeto está licenciado sob a licença MIT. Consulte o arquivo [LICENSE](./LICENSE) para mais informações.
